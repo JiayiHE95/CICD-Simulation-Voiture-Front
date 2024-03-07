@@ -9,7 +9,7 @@ function App() {
     try {
       const url = 'http://localhost:8080/api/commands/' + action;
       const response = await axios.post(url);
-      console.log(response.data); // Affichez la réponse de l'API dans la console
+      console.log("response ",response); // Affichez la réponse de l'API dans la console
     } catch (error) {
       console.error('Erreur lors de la requête POST :', error);
     }
