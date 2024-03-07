@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+
+.car {
+  width: 50px; /* Largeur de la voiture */
+  height: 30px; /* Hauteur de la voiture */
+  background-color: red; /* Couleur de la voiture */
+  position: absolute; /* Position absolue pour permettre le positionnement précis */
+  bottom: 0; /* Position initiale en haut */
+  left: 0; /* Position initiale à gauche */
+  transition: top 0.5s ease, left 0.5s ease; /* Animation de transition pour un déplacement fluide */
+}

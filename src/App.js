@@ -1,47 +1,65 @@
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
+  let positionX = 0;
+  let positionY = 0;
+  const socket = new WebSocket("ws://localhost:8080/websocket/test")
+
+  socket.addEventListener("open", (event) => {
+    socket.send("Connection established")
+  })
+
+  socket.addEventListener("message", (event) => {
+    console.log("Message from server ", event.data)
+    positionX = event.data.split(',')[0];
+    positionY = event.data.split(',')[1];
+    updateCarPosition(positionX, positionY);
+  })
+
+  socket.addEventListener("close", (event) => {
+    console.log("Connection closed")
+  })
+
+  const updateCarPosition = (x, y) => {
+    const carElement = document.getElementById('car');
+    if (carElement) {
+      carElement.style.left = `${x*3}px`;
+      carElement.style.bottom = `${y*3}px`;
+    }
+  };
 
   const handleButtonClick = async (action) => {
-    try {
-      const url = 'http://localhost:8080/api/commands/' + action;
-      const response = await axios.post(url);
-      console.log("response ",response); // Affichez la réponse de l'API dans la console
-    } catch (error) {
-      console.error('Erreur lors de la requête POST :', error);
+    socket && socket.send(action);
+  }
+
+  const handleKeyDown = (event) => {
+    switch (event.key) {
+      case 'ArrowUp':
+        console.log('monter');
+        handleButtonClick('monter');
+        break;
+      case 'ArrowDown':
+        console.log('descendre');
+        handleButtonClick('descendre');
+        break;
+      case 'ArrowLeft':
+        console.log('reculer');
+        handleButtonClick('reculer');
+        break;
+      case 'ArrowRight':
+        console.log('avancer');
+        handleButtonClick('avancer');
+        break;
+      default:
+        break;
     }
   };
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      switch (event.key) {
-        case 'ArrowUp':
-          console.log('monter');
-          handleButtonClick('monter');
-          break;
-          case 'ArrowDown':
-            console.log('descendre');
-            handleButtonClick('descendre');
-            break;
-          case 'ArrowLeft':
-            console.log('reculer');
-            handleButtonClick('reculer');
-            break;
-          case 'ArrowRight':
-            console.log('avancer');
-            handleButtonClick('avancer');
-            break;
-          default:
-            break;
-      }
-    };
-
     document.addEventListener('keydown', handleKeyDown);
-
-    // Nettoyage de l'écouteur d'événement lors du démontage du composant
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
@@ -50,14 +68,7 @@ function App() {
   return (
     <div className="App">
       <h1>Simulateur de voiture</h1>
-
-    {/*
-          <button onClick={() => handleButtonClick('avancer')}>Avancer</button>
-          <button onClick={() => handleButtonClick('reculer')}>Reculer</button>
-          <button onClick={() => handleButtonClick('monter')}>Monter</button>
-          <button onClick={() => handleButtonClick('descendre')}>Descendre</button>
-    */}
-      
+      <div id="car" className="car"></div>
     </div>
   );
 }
