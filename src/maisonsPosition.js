@@ -1,4 +1,4 @@
-const maisonPositions = [
+const maisonsPosition = [
     { x: 400, y: 90 },
     { x: 500, y: 100 },
     { x: 450, y: 150 },
@@ -7,4 +7,4 @@ const maisonPositions = [
     { x: 450, y: 350 },
   ];
   
-  export default maisonPositions;
+  export default maisonsPosition;
