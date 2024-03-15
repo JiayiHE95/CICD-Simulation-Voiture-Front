@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 import maisonPositions from './maisonsPosition';
+import stationPosition from './stationPosition';
 
 function App() {
   const canvasRef = useRef(null);
@@ -57,14 +58,25 @@ function App() {
       height: '20px',
       backgroundColor: 'red', 
     };
+
+    const stationStyle = {
+      width: '20px',
+      height: '20px',
+      backgroundColor: 'green', 
+    };
   
     // Utilisez la liste des positions de maisons de votre fichier maisonsPosition
     maisonPositions.forEach((position, index) => {
       ctx.fillStyle = maisonStyle.backgroundColor;
-      
       ctx.fillRect(position.x, position.y, 9, 9);
     });
-  };
+
+    stationPosition.forEach((position, index) => {
+      ctx.fillStyle = stationStyle.backgroundColor;
+      ctx.fillRect(position.x, position.y, 9, 9);
+      }
+    );
+  }
 
   const drawPlateau = (ctx) => {
     ctx.fillStyle = "#808080";
