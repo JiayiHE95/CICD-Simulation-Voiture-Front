@@ -39,16 +39,10 @@ function App() {
     }
 
     const ctx = canvas.getContext("2d");
-    // Efface le canvas
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Dessine le plateau
     drawPlateau(ctx);
-
-    // Dessine les maisons
     drawMaisons(ctx);
-
-    // Dessine la voiture
     drawCar(ctx);
   };
 
@@ -65,7 +59,6 @@ function App() {
       backgroundColor: 'green', 
     };
   
-    // Utilisez la liste des positions de maisons de votre fichier maisonsPosition
     maisonPositions.forEach((position, index) => {
       ctx.fillStyle = maisonStyle.backgroundColor;
       ctx.fillRect(position.x, position.y, 9, 9);
