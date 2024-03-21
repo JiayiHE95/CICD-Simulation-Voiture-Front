@@ -8,7 +8,10 @@ function App() {
   const canvasRef = useRef(null);
   const carPosition = { x: 0, y: 0 };
 
-  const socket = new WebSocket("ws://localhost:8080/websocket/test");
+  //const socket = new WebSocket("ws://localhost:8080/websocket/test");
+  
+  const socket = new WebSocket("wss://polytech2.home.lange.xyz/websocket/test");
+
 
   socket.addEventListener("open", (event) => {
     socket.send("Connection established");
