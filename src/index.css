@@ -5,9 +5,62 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: lightgray;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.App {
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  margin-top: 50px;
+}
+
+h1 {
+  color: #333;
+}
+
+h2 {
+  color: #444;
+  margin-top: 10px;
+}
+
+h3 {
+  color: #666;
+  margin-bottom: 15px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 500;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60%; /* si vous souhaitez limiter la largeur */
+}
+
+
+canvas {
+  border: 2px solid #333;
+}
+
+.carburant-bar {
+  width: 300px;
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+
+.fill {
+  height: 100%;
+  background-color: #4CAF50;
+  border-radius: 10px;
+  transition: width 0.3s ease-in-out;
+}
+
+
+
