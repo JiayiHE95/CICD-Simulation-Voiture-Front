@@ -4,14 +4,32 @@ import './App.css';
 import maisonPositions from './maisonsPosition';
 import stationPosition from './stationPosition';
 
+import carImage from './imageCar.png';
+import bouleImage from './imageBoule.png';
+import maisonImage from './imageMaison.png';
+import stationImage from './imageStation.png';
+
 function App() {
   const canvasRef = useRef(null);
   const carPosition = { x: 0, y: 0 };
+  const boulePosition = { x: 0, y: 0 };
 
-  //const socket = new WebSocket("ws://localhost:8080/websocket/test");
+  // Préchargement des images
+  const carImg = new Image();
+  const bouleImg = new Image();
+  const maisonImg = new Image();
+  const stationImg = new Image();
+
+  carImg.src = carImage;
+  bouleImg.src = bouleImage;
+  maisonImg.src = maisonImage;
+  stationImg.src = stationImage;
+
+
+  const socket = new WebSocket("ws://localhost:8080/websocket/test");
+  // const socket = new WebSocket("wss://polytech2.home.lange.xyz/websocket/test");
   
-  const socket = new WebSocket("wss://polytech2.home.lange.xyz/websocket/test");
-
+  
 
   socket.addEventListener("open", (event) => {
     socket.send("Connection established");
@@ -19,8 +37,9 @@ function App() {
 
   socket.addEventListener("message", (event) => {
     console.log("Message from server ", event.data);
-    const [newX, newY] = event.data.split(',').map(parseFloat);
+    const [newX, newY, bouleX, bouleY] = event.data.split(',').map(parseFloat);
     updateCarPosition(newX, newY);
+    updateBoulePosition(bouleX,bouleY);
   });
 
   socket.addEventListener("close", (event) => {
@@ -30,6 +49,12 @@ function App() {
   const updateCarPosition = (x, y) => {
     carPosition.x = x;
     carPosition.y = y;
+    draw();
+  };
+
+  const updateBoulePosition = (x, y) => {
+    boulePosition.x = x;
+    boulePosition.y = y;
     draw();
   };
 
@@ -47,41 +72,30 @@ function App() {
     drawPlateau(ctx);
     drawMaisons(ctx);
     drawCar(ctx);
+    drawBoule(ctx);
   };
-
-  const drawMaisons = (ctx) => {
-    const maisonStyle = {
-      width: '20px',
-      height: '20px',
-      backgroundColor: 'red', 
-    };
-
-    const stationStyle = {
-      width: '20px',
-      height: '20px',
-      backgroundColor: 'green', 
-    };
-  
-    maisonPositions.forEach((position, index) => {
-      ctx.fillStyle = maisonStyle.backgroundColor;
-      ctx.fillRect(position.x, position.y, 9, 9);
-    });
-
-    stationPosition.forEach((position, index) => {
-      ctx.fillStyle = stationStyle.backgroundColor;
-      ctx.fillRect(position.x, position.y, 9, 9);
-      }
-    );
-  }
 
   const drawPlateau = (ctx) => {
     ctx.fillStyle = "#808080";
     ctx.fillRect(0, 0, 500, 300);
   };
 
+  const drawMaisons = (ctx) => {
+    maisonPositions.forEach((position, index) => {
+      ctx.drawImage(maisonImg, position.x, position.y, 50, 50);
+    });
+
+    stationPosition.forEach((position, index) => {
+      ctx.drawImage(stationImg, position.x, position.y, 50, 50);
+    });
+  };
+
   const drawCar = (ctx) => {
-    ctx.fillStyle = "#00F";
-    ctx.fillRect(carPosition.x, carPosition.y, 9, 9);
+    ctx.drawImage(carImg, carPosition.x, carPosition.y, 50, 50);
+  };
+
+  const drawBoule = (ctx) => {
+    ctx.drawImage(bouleImg, boulePosition.x, boulePosition.y, 50, 50);
   };
 
   useEffect(() => {
