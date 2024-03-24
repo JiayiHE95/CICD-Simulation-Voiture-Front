@@ -29,8 +29,8 @@ function App() {
   stationImg.src = stationImage;
 
 
-  const socket = new WebSocket("ws://localhost:8080/websocket/test");
-  //const socket = new WebSocket("wss://polytech2.home.lange.xyz/websocket/test");
+  //const socket = new WebSocket("ws://localhost:8080/websocket/test");
+  const socket = new WebSocket("wss://polytech2.home.lange.xyz/websocket/test");
   
   
 
